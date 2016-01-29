@@ -1541,7 +1541,7 @@ RenameDatabase(const char *oldname, const char *newname)
 	cqContext  *pcqCtx;
 
 	/*
-	 * make sure "hcatalog" is not used as new name, because it's reserved for
+	 * Make sure "hcatalog" is not used as new name, because it's reserved for
 	 * hcatalog feature integration*/
 	if (strcmp(newname, "hcatalog") == 0)
 		ereport(ERROR,
