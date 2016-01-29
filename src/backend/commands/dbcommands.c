@@ -848,6 +848,8 @@ createdb(CreatedbStmt *stmt)
 	 * Check for db name conflict.	This is just to give a more friendly error
 	 * message than "unique index violation".  There's a race condition but
 	 * we're willing to accept the less friendly message in that case.
+	 * Also check that user is not trying to use "hcatalog" as a database name,
+	 * because it's already reserved for hcatalog feature integration.
 	 */
 	if (OidIsValid(get_database_oid(dbname)))
 			if (strcmp(dbname, "hcatalog") == 0)
