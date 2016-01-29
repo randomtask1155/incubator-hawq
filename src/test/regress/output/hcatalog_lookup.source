@@ -266,6 +266,16 @@ select pg_catalog.pg_database_size('hcatalog');
 ERROR:  database hcatalog (OID 6120) is reserved (SOMEFILE:SOMEFUNC)
 select pg_catalog.pg_database_size(6120);
 ERROR:  database hcatalog (OID 6120) is reserved (SOMEFILE:SOMEFUNC)
+--negative test: cannot create database named "hcatalog"
+CREATE DATABASE hcatalog;
+ERROR:  hcatalog is a reserved name for hcatalog feature integration 
+--negative test: cannot rename exiting database to "hcatalog"
+SET gp_called_by_pgdump = true;
+SET
+ALTER DATABASE regression RENAME TO hcatalog;
+ERROR:  hcatalog is a reserved name for hcatalog feature integration
+SET gp_called_by_pgdump = false;
+SET
 -- cleanup
 DROP schema test_schema cascade;
 NOTICE:  drop cascades to append only table test_schema.r
