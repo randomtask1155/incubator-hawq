@@ -850,9 +850,14 @@ createdb(CreatedbStmt *stmt)
 	 * we're willing to accept the less friendly message in that case.
 	 */
 	if (OidIsValid(get_database_oid(dbname)))
-		ereport(ERROR,
-				(errcode(ERRCODE_DUPLICATE_DATABASE),
-				 errmsg("database \"%s\" already exists", dbname)));
+			if (strcmp(dbname, "hcatalog") == 0)
+				ereport(ERROR,
+						(errcode(ERRCODE_RESERVED_HCATALOG_NAME),
+						 errmsg("hcatalog is a reserved name for hcatalog feature integration")));
+			else
+				ereport(ERROR,
+						(errcode(ERRCODE_DUPLICATE_DATABASE),
+						errmsg("database \"%s\" already exists", dbname)));
 
 	/*
 	 * Select an OID for the new database, checking that it doesn't have

@@ -154,6 +154,10 @@ ALTER DATABASE <replaceable class="PARAMETER">name</replaceable> OWNER TO <repla
    User-specific settings override database-specific
    ones if there is a conflict.
   </para>
+
+  <para>
+   Currently RENAME TO is supported only when called by pgdump utility.
+  </para>
  </refsect1>
 
  <refsect1>
