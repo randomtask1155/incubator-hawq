@@ -138,6 +138,14 @@ alter table test_schema.p exchange partition p1 with table hcatalog.test_schema.
 select pg_catalog.pg_database_size('hcatalog');
 select pg_catalog.pg_database_size(6120);
 
+--negative test: cannot create database named "hcatalog"
+CREATE DATABASE hcatalog;
+
+--negative test: cannot rename exiting database to "hcatalog"
+SET gp_called_by_pgdump = true;
+ALTER DATABASE regression RENAME TO hcatalog;
+SET gp_called_by_pgdump = false;
+
 -- cleanup
 DROP schema test_schema cascade;
 SELECT convert_to_internal_schema('test_schema');
