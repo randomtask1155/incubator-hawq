@@ -1541,6 +1541,13 @@ RenameDatabase(const char *oldname, const char *newname)
 	cqContext  *pcqCtx;
 
 	/*
+	 * make sure "hcatalog" is not used as new name, because it's reserved for
+	 * hcatalog feature integration*/
+	if (strcmp(newname, "hcatalog") == 0)
+		ereport(ERROR,
+				(errcode(ERRCODE_RESERVED_HCATALOG_NAME),
+				errmsg("hcatalog is a reserved name for hcatalog feature integration")));
+	/*
 	 * Look up the target database's OID, and get exclusive lock on it. We
 	 * need this for the same reasons as DROP DATABASE.
 	 */
